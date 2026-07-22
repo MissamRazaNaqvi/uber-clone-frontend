@@ -26,7 +26,7 @@ export default function UserLogin() {
                 toast.success(response?.data?.message || "Login successful!");
             }
 
-            navigate("/");
+            navigate("/home");
             
             // console.log(response.data);
         } catch (error) {
@@ -81,11 +81,15 @@ export default function UserLogin() {
 
                 </form>
 
-                <p className="mt-6 text-center text-sm text-gray-600">
+                <p className="mt-4 text-center text-sm text-gray-600 mb-4">
                     Don't have an account?
                     <Link to="/signup" className="ml-1 font-semibold text-black hover:underline"
                     >Register</Link>
                 </p>
+
+                <Button loading={loading} className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Sign Up As Captain
+                </Button>
             </div>
         </div>
     );

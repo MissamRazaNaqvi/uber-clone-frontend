@@ -1,24 +1,34 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router'
+import { UserContext } from '../context/AuthContext';
 
 export default function Home() {
+  const { user } = useContext(UserContext);
+
+  console.log(user, "user from context");
+
   return (
-    <div> 
-      <Link to="/">Home</Link>
+    <div>
+      Welcome {user?.name}
 
-      <Link to="/about">About</Link>
+      <header>
 
-      <Link to="/signup">Signup</Link>
+        <Link to="/home">Home</Link>
 
-      <Link to="/login">Login</Link>
+        <Link to="/about">About</Link>
 
-      <Link to="/captain/signup">
-        Captain Signup
-      </Link>
+        <Link to="/signup">Signup</Link>
 
-      <Link to="/captain/login">
-        Captain Login
-      </Link>
-  </div>
+        <Link to="/login">Login</Link>
+
+        <Link to="/captain/signup">
+          Captain Signup
+        </Link>
+
+        <Link to="/captain/login">
+          Captain Login
+        </Link>
+      </header>
+    </div>
   )
 }
