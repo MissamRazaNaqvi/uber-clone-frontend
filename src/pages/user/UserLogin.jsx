@@ -1,26 +1,20 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import toast from 'react-hot-toast';
 
 import Input from "../../components/common/Input.jsx";
 import Button from "../../components/common/Button.jsx";
 
 import { loginUser } from "../services/authService.js";
 
+
 export default function UserLogin() {
+
     const navigate = useNavigate();
-
     const [loading, setLoading] = useState(false);
-
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm({
-        defaultValues: {
-            email: "",
-            password: ""
-        }
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        defaultValues: { email: "", password: "" }
     });
 
     const onSubmit = async (data) => {
@@ -28,18 +22,19 @@ export default function UserLogin() {
             setLoading(true);
 
             const response = await loginUser(data);
-
-            console.log(response.data);
+            if (response) {
+                toast.success(response?.data?.message || "Login successful!");
+            }
 
             navigate("/");
-
+            
+            // console.log(response.data);
         } catch (error) {
-            console.error(error.response?.data);
 
-            alert(
-                error.response?.data?.message ||
-                "Login failed. Please try again."
+            toast.error(
+                error.response?.data?.message || "Login failed."
             );
+            // console.error(error.response?.data);
         } finally {
             setLoading(false);
         }
@@ -47,46 +42,18 @@ export default function UserLogin() {
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center px-5 py-10">
-
             <div className="w-full max-w-md rounded-2xl bg-white shadow-lg p-8">
-
-                {/* Logo */}
-
-                <div className="flex justify-center mb-6">
-
-                    <img
-                        src="/logo.png"
-                        alt="Uber Clone"
-                        className="w-16"
-                    />
-
-                </div>
-
-                {/* Heading */}
-
                 <div className="text-center mb-8">
-
-                    <h1 className="text-3xl font-bold">
-                        Welcome Back
-                    </h1>
-
+                    <h1 className="text-3xl font-bold">Welcome Back</h1>
                     <p className="text-gray-500 mt-2">
                         Login to continue booking your rides.
                     </p>
 
                 </div>
 
-                {/* Form */}
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
 
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="space-y-5"
-                >
-
-                    <Input
-                        label="Email"
-                        name="email"
-                        register={register}
+                    <Input label="Email" name="email" register={register}
                         validation={{
                             required: "Email is required",
                             pattern: {
@@ -98,11 +65,7 @@ export default function UserLogin() {
                         placeholder="Enter your email"
                     />
 
-                    <Input
-                        label="Password"
-                        type="password"
-                        name="password"
-                        register={register}
+                    <Input label="Password" type="password" name="password" register={register}
                         validation={{
                             required: "Password is required",
                             minLength: {
@@ -114,29 +77,16 @@ export default function UserLogin() {
                         placeholder="Enter your password"
                     />
 
-                    <Button loading={loading}>
-                        Login
-                    </Button>
+                    <Button loading={loading}>Login</Button>
 
                 </form>
 
-                {/* Footer */}
-
                 <p className="mt-6 text-center text-sm text-gray-600">
-
                     Don't have an account?
-
-                    <Link
-                        to="/signup"
-                        className="ml-1 font-semibold text-black hover:underline"
-                    >
-                        Register
-                    </Link>
-
+                    <Link to="/signup" className="ml-1 font-semibold text-black hover:underline"
+                    >Register</Link>
                 </p>
-
             </div>
-
         </div>
     );
 }

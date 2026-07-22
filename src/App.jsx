@@ -15,30 +15,17 @@ import Welcome from "./pages/Welcome";
 function App() {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={<Welcome />}
-      />
+      <Route path="/" element={<Welcome />} />
 
-      <Route
-        path="/signup"
-        element={<UserRegistration />}
-      />
+      <Route path="/signup" element={<UserRegistration />}/>
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
 
       <Route path="/signup" element={<UserRegistration />} />
       <Route path="/login" element={<UserLogin />} />
 
-      <Route
-        path="/captain/signup"
-        element={<CaptainRegistration />}
-      />
-
-      <Route
-        path="/captain/login"
-        element={<CaptainLogin />}
-      />
+      <Route path="/captain/signup" element={<CaptainRegistration />} />
+      <Route path="/captain/login" element={<CaptainLogin />} />
 
       <Route path="*" element={<NotFound />} />
 
